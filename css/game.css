@@ -70,6 +70,10 @@ h3 {
     margin:0;
 }
 
+button {
+    cursor:pointer;
+}
+
 button:focus {
     outline:none;
 }
@@ -78,6 +82,11 @@ button:focus {
     list-style: none;
     position:relative;
     top:150px;
+}
+
+.start-screen li {
+    position:relative;
+    display:inline-block;
 }
 
 .start-screen button {
@@ -91,10 +100,38 @@ button:focus {
     border-radius:50%;
     border:0;
     opacity:0.9;
-    background:linear-gradient(135deg, rgba(252,243,186,1) 0%, rgba(252,232,79,1) 36%, rgba(245,204,0,1) 75%, rgba(251,239,147,1) 100%);
+    z-index:12;
+    background:none; /*linear-gradient(135deg, rgba(252,243,186,1) 0%, rgba(252,232,79,1) 36%, rgba(245,204,0,1) 75%, rgba(251,239,147,1) 100%);*/
 }
 
 .start-screen button:hover {
     background-image:linear-gradient(135deg, green 0%, lightgreen 20%, forestgreen 75%,darkgreen 100%);
     color:ivory;
+}
+
+.menu-image {
+    height:105px;
+    position:absolute;
+    z-index:123;
+    opacity:0;
+}
+
+.menu-image#start-image {
+    height:130px;
+    top:-30px;
+    left:0px;
+}
+
+.menu-image#load-image {
+    top:-20px;
+    right:25px;
+}
+
+.menu-image#options-image {
+    top:-50px;
+    left:10px;
+}
+
+.start-screen button:hover .menu-image {
+    opacity:1;
 }
