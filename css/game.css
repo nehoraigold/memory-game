@@ -18,7 +18,8 @@
     src:url(../fonts/Ravenna.ttf);
 }
 
-.start-screen {
+body {
+    margin:0;
     position:fixed;
     text-align:center;
     top:0;
@@ -27,7 +28,7 @@
     left:0;
 }
 
-.start-screen::after {
+body::after {
     content:"";
     background-image:url(../images/breath-of-the-wild-bg2.jpg);
     background-repeat:no-repeat;
@@ -56,13 +57,20 @@
     margin:0;
 }
 
+.title-img {
+    width:450px;
+    user-select:none;
+}
+
 h1 {
     font-size:100px;
 }
 
 h2.title {
     font-family:Pretendo, sans-serif;
-    font-size:50px;
+    font-size:40px;
+    pointer-events:none;
+    user-select: none;
 }
 
 h3 {
@@ -110,6 +118,7 @@ button:focus {
 }
 
 .menu-image {
+    pointer-events: none;
     height:105px;
     position:absolute;
     z-index:123;
@@ -123,6 +132,7 @@ button:focus {
 }
 
 .menu-image#load-image {
+    height:108px;
     top:-20px;
     right:25px;
 }
@@ -134,4 +144,46 @@ button:focus {
 
 .start-screen button:hover .menu-image {
     opacity:1;
+}
+
+.modal-background {
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    position:fixed;
+    background-color:rgba(0,0,0,0.5);
+    z-index:1234;
+}
+
+#options-modal {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+#top-menu {
+    height:80px;
+    border:1px solid gold;
+}
+
+.card-row {
+    display:flex;
+    justify-content:center;
+}
+
+.card {
+    height:200px;
+    width:120px;
+    margin:15px;
+    border-radius:15px;
+    border:1px solid black;
+    background-color:forestgreen;
+    background-image:url(../images/triforce.png);
+    background-image:url(../images/triforce.png), linear-gradient(to bottom right, lightgreen 0%,forestgreen 30%,green 50%,lightgreen 80%,darkgreen 100%);
+    background-position:center;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-size:100px;
 }

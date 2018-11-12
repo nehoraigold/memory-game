@@ -10,11 +10,14 @@
 	</head>
 
 	<body>
-		<section>
+
+		<!--START SCREEN-->
+		<section style='display:none'>
 			<div class='start-screen'>
 				<div class='start-screen-content'>
-					<h3>Nintendo</h3>
-					<h1 class='title'>Legend of Zelda</h1>
+					<!-- <h3>Nintendo</h3>
+					<h1 class='title'>Legend of Zelda</h1> -->
+					<img class='title-img' src='./images/legend-of-zelda-logo.png' alt='The Legend of Zelda' />
 					<h2 class='title'>The Memory Game</h2>
 					<ul class='start-meu-buttons'>
 						<div>
@@ -42,7 +45,36 @@
 				</div>
 			</div>
 		</section>
-		<section style='display:none'>The game itself!</section>
+
+		<!--MODAL BACKGROUND-->
+		<section class='modal-background' style='display:none'>
+
+			<!--OPTIONS MODAL-->
+			<div id='options-modal'>
+
+			</div>
+		</section>
+		<section id='game-board'>
+			<div id='top-menu'></div>
+			<div class='card-row'>
+				<div class='card'></div>
+				<div class='card'></div>
+				<div class='card'></div>
+				<div class='card'></div>
+			</div>
+			<div class='card-row'>
+				<div class='card'></div>
+				<div class='card'></div>
+				<div class='card'></div>
+				<div class='card'></div>
+			</div>
+			<div class='card-row'>
+				<div class='card'></div>
+				<div class='card'></div>
+				<div class='card'></div>
+				<div class='card'></div>
+			</div>
+		</section>
 		<audio>
 			<source src="background-music.mp3" type="audio/mpeg">
 		</audio>
