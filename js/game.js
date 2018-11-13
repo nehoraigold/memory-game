@@ -5,7 +5,9 @@ Game = {
         majorasMask: './images/majoras-mask.png',
         linkSprite: './images/link-sprite.png',
         boat: './images/windwaker-boat.png',
-        shadowLink: './images/shadow-link.png'
+        shadowLink: './images/shadow-link.png',
+        zelda: './images/zelda.png',
+        midna: './images/midna-wolf-link.png'
     },
     cardsFound: 0,
     difficulty: "easy",
