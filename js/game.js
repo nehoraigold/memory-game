@@ -1,3 +1,5 @@
+//things to implement: number of wrong guesses, timer, high scores
+
 Game = {
     images: {
         botwLink: './images/botw-link.png',
@@ -86,10 +88,11 @@ Game.board.flipCard = function (event) {
                     Game.board.cardElements[i].style.pointerEvents = "auto";
                 }
             }, 700);
+            Game.board.flippedCard.addEventListener('click', Game.board.flipCard);
         }
     } else if (Game.board.flippedCard === null) {
         Game.board.flippedCard = this;
-        this.removeEventListener('click', Game.board.flipcard);
+        this.removeEventListener('click', Game.board.flipCard);
     }
 }
 
