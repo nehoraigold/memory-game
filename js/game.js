@@ -30,6 +30,9 @@ Game.board.flipCard = function (event) {
             Game.cardsFound += 2;
             Game.board.flippedCard = null;
         } else {
+            for (var i = 0; i < Game.board.cardElements.length; i++) {
+                Game.board.cardElements[i].removeEventListener('click',Game.board.flipCard);
+            }
             setTimeout(() => {
                 event.target.innerHTML = "";
                 event.target.className = event.target.className.replace(' flipped', '');
@@ -37,6 +40,7 @@ Game.board.flipCard = function (event) {
                 Game.board.flippedCard.innerHTML = "";
                 Game.board.flippedCard = null;
             }, 700);
+            setTimeout(Game.board.bindCardActions, 700);
         }
     } else if (Game.board.flippedCard === null) {
         Game.board.flippedCard = event.target;

@@ -171,6 +171,7 @@ button:focus {
 .card-row {
     display:flex;
     justify-content:center;
+    flex-wrap:wrap;
 }
 
 .card {
