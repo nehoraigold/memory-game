@@ -12,49 +12,55 @@
 	<body>
 
 		<!--START SCREEN-->
-		<section>
-			<div class='start-screen' style='display:none'>
-				<div class='start-screen-content'>
-					<!-- <h3>Nintendo</h3>
+
+		<section id='start-screen'>
+			<div class='start-screen-content'>
+				<!-- <h3>Nintendo</h3>
 					<h1 class='title'>Legend of Zelda</h1> -->
-					<img class='title-img' src='./images/legend-of-zelda-logo.png' alt='The Legend of Zelda' />
-					<h2 class='title'>The Memory Game</h2>
-					<ul class='start-meu-buttons'>
-						<div>
-							<li>
-								<button id='start'>
-									<img class='menu-image' id='start-image' src="images/link2.png">Start
-								</button>
-							</li>
-						</div>
-						<div>
-							<li>
-								<button id='load'>
-									<img class='menu-image' id='load-image' src='images/zelda.png'>Load
-								</button>
-							</li>
-						</div>
-						<div>
-							<li>
-								<button id='options'>
-									<img class='menu-image' id='options-image' src='images/navi.png'>Options
-								</button>
-							</li>
-						</div>
-					</ul>
-				</div>
+				<img class='title-img' src='./images/legend-of-zelda-logo.png' alt='The Legend of Zelda' />
+				<h2 class='title'>The Memory Game</h2>
+				<ul class='start-meu-buttons'>
+					<div>
+						<li>
+							<button id='start'>
+								<img class='menu-image' id='start-image' src="images/link2.png">Start
+							</button>
+						</li>
+					</div>
+					<div>
+						<li>
+							<button id='load'>
+								<img class='menu-image' id='load-image' src='images/zelda.png'>Load
+							</button>
+						</li>
+					</div>
+					<div>
+						<li>
+							<button id='options'>
+								<img class='menu-image' id='options-image' src='images/navi.png'>Options
+							</button>
+						</li>
+					</div>
+				</ul>
 			</div>
+
 		</section>
 
 		<!--MODAL BACKGROUND-->
 		<section class='modal-background' style='display:none'>
 
 			<!--OPTIONS MODAL-->
-			<div id='options-modal'>
+			<div class='modal' id='options-modal'>
 
 			</div>
+
+			<!--COMPLETED GAME MODAL-->
+			<div class='modal' id='finished-modal'>
+				<h2>You won!</h2>
+				<button>New Game</button>
+			</div>
 		</section>
-		<section id='game'>
+		<section id='game' style='display:none'>
 			<div id='top-menu'></div>
 			<div id='game-board'>
 			</div>

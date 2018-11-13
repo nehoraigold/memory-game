@@ -85,18 +85,18 @@ button:focus {
     outline:none;
 }
 
-.start-screen ul {
+#start-screen ul {
     list-style: none;
     position:relative;
     top:150px;
 }
 
-.start-screen li {
+#start-screen li {
     position:relative;
     display:inline-block;
 }
 
-.start-screen button {
+#start-screen button {
     font-family:Ravenna,serif;
     font-size:35px;
     font-weight:500;
@@ -108,10 +108,10 @@ button:focus {
     border:0;
     opacity:0.9;
     z-index:12;
-    background:none; /*linear-gradient(135deg, rgba(252,243,186,1) 0%, rgba(252,232,79,1) 36%, rgba(245,204,0,1) 75%, rgba(251,239,147,1) 100%);*/
+    background:linear-gradient(135deg, rgba(252,243,186,1) 0%, rgba(252,232,79,1) 36%, rgba(245,204,0,1) 75%, rgba(251,239,147,1) 100%);
 }
 
-.start-screen button:hover {
+#start-screen button:hover {
     background-image:linear-gradient(135deg, green 0%, lightgreen 20%, forestgreen 75%,darkgreen 100%);
     color:ivory;
 }
@@ -141,7 +141,7 @@ button:focus {
     left:10px;
 }
 
-.start-screen button:hover .menu-image {
+#start-screen button:hover .menu-image {
     opacity:1;
 }
 
@@ -155,11 +155,26 @@ button:focus {
     z-index:1234;
 }
 
-#options-modal {
+.modal {
     position:absolute;
     top:50%;
     left:50%;
     transform: translateX(-50%) translateY(-50%);
+    border:1px solid black;
+    border-radius:20px;
+    background-image:linear-gradient(135deg, green 0%, lightgreen 20%, forestgreen 75%,darkgreen 100%);
+    padding:30px;
+    box-shadow:10px 10px 10px rgba(0,0,0,0.5);
+}
+
+.modal h2 {
+    font-family:Triforce,fantasy;
+    font-weight:100;
+    font-size:40px;
+}
+
+#options-modal {
+
 }
 
 #top-menu {

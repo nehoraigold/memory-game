@@ -37,7 +37,8 @@ Game.board.shuffleCards = function () {
     Game.board.generateBoard();
 }
 
-Game.board.generateBoard = function() {
+Game.board.generateBoard = function () {
+    document.getElementById('game-board').innerHTML = "";
     for (var i = 0; i < Game.board.cardOrder.length; i++) {
         var cardElement = document.createElement('div');
         cardElement.className = "card";
@@ -67,7 +68,10 @@ Game.board.flipCard = function (event) {
             this.removeEventListener('click', Game.board.flipCard);
             Game.cardsFound += 2;
             Game.board.flippedCard = null;
-            //conditional if game won!
+            if (Game.cardsFound === Game.board.cardOrder.length) {
+                console.log('Congrats! You won!');
+                Game.completed();
+            }
         } else {
             for (var i = 0; i < Game.board.cardElements.length; i++) {
                 Game.board.cardElements[i].style.pointerEvents = "none";
@@ -85,7 +89,7 @@ Game.board.flipCard = function (event) {
         }
     } else if (Game.board.flippedCard === null) {
         Game.board.flippedCard = this;
-        this.removeEventListener('click',Game.board.flipcard);
+        this.removeEventListener('click', Game.board.flipcard);
     }
 }
 
@@ -97,6 +101,12 @@ Game.newGame = function () {
 
 Game.start = function () {
     Game.board.shuffleCards();
+    document.getElementById('start-screen').style.display = "none";
+    document.getElementById('game').style.display = "block";
 }
 
-Game.start();
+Game.bindMenuActions = function () {
+    document.getElementById('start').addEventListener('click', Game.start);
+}
+
+Game.bindMenuActions();
