@@ -1,53 +1,91 @@
 Game = {
-    allCards: ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F'],
+    images: {
+        botwLink: './images/botw-link.png',
+        ganondorf: './images/ganondorf.png',
+        majorasMask: './images/majoras-mask.png',
+        linkSprite: './images/link-sprite.png',
+        boat: './images/windwaker-boat.png',
+        shadowLink: './images/shadow-link.png'
+    },
     cardsFound: 0,
     difficulty: "easy",
     board: {
-        cardElements: Array.from(document.getElementsByClassName('card')),
+        cardElements: [],
         cardOrder: [],
         flippedCard: null
     }
 }
 
 Game.board.shuffleCards = function () {
+    //converting Game.images files to array with two copies of each image
     Game.board.cardOrder = [];
-    for (var i = 0; i < Game.allCards.length; i++) {
-        var ind = Math.floor(Math.random() * Game.allCards.length);
-        Game.board.cardOrder.splice(ind, 0, Game.allCards[i]);
+    for (var property in Game.images) {
+        Game.board.cardOrder.push(property);
+        Game.board.cardOrder.push(property);
     }
-    Game.board.cardOrder = Game.board.cardOrder.filter((el) => el !== undefined);
+    //shuffling that array
+    var m = Game.board.cardOrder.length;
+    var t, i;
+    while (m !== 0) {
+        i = Math.floor(Math.random() * m--);
+        t = Game.board.cardOrder[m];
+        Game.board.cardOrder[m] = Game.board.cardOrder[i];
+        Game.board.cardOrder[i] = t;
+    }
+    Game.board.generateBoard();
+}
+
+Game.board.generateBoard = function() {
+    for (var i = 0; i < Game.board.cardOrder.length; i++) {
+        var cardElement = document.createElement('div');
+        cardElement.className = "card";
+        cardElement.dataset.type = Game.board.cardOrder[i];
+        var backImage = document.createElement('img');
+        backImage.className = "back";
+        backImage.src = "./images/triforce.png";
+        var frontImage = document.createElement('img');
+        frontImage.className = "front";
+        frontImage.src = Game.images[Game.board.cardOrder[i]];
+        cardElement.addEventListener('click', Game.board.flipCard);
+        cardElement.appendChild(frontImage);
+        cardElement.appendChild(backImage);
+        document.getElementById('game-board').appendChild(cardElement);
+        Game.board.cardElements.push(cardElement);
+    }
 }
 
 Game.board.flipCard = function (event) {
-    if (event.target === Game.board.flippedCard) {
+    if (this === Game.board.flippedCard) {
         return null;
     }
-    var cardIndex = Game.board.cardElements.indexOf(event.target);
-    event.target.className += " flipped";
-    event.target.textContent = Game.board.cardOrder[cardIndex];
+    this.classList.toggle("flipped");
+    var type = this.dataset.type;
     if (Game.board.flippedCard !== null) {
-        if (event.target.textContent === Game.board.flippedCard.textContent) {
+        if (type === Game.board.flippedCard.dataset.type) {
+            this.removeEventListener('click', Game.board.flipCard);
             Game.cardsFound += 2;
             Game.board.flippedCard = null;
+            //conditional if game won!
         } else {
             for (var i = 0; i < Game.board.cardElements.length; i++) {
-                Game.board.cardElements[i].removeEventListener('click',Game.board.flipCard);
+                Game.board.cardElements[i].style.pointerEvents = "none";
             }
             setTimeout(() => {
-                event.target.innerHTML = "";
-                event.target.className = event.target.className.replace(' flipped', '');
-                Game.board.flippedCard.className = Game.board.flippedCard.className.replace(' flipped','');
-                Game.board.flippedCard.innerHTML = "";
+                this.classList.toggle('flipped');
+                Game.board.flippedCard.classList.toggle('flipped');
                 Game.board.flippedCard = null;
             }, 700);
-            setTimeout(Game.board.bindCardActions, 700);
+            setTimeout(() => {
+                for (var i = 0; i < Game.board.cardElements.length; i++) {
+                    Game.board.cardElements[i].style.pointerEvents = "auto";
+                }
+            }, 700);
         }
     } else if (Game.board.flippedCard === null) {
-        Game.board.flippedCard = event.target;
+        Game.board.flippedCard = this;
+        this.removeEventListener('click',Game.board.flipcard);
     }
 }
-
-
 
 Game.newGame = function () {
     Game.cardsFound = 0;
@@ -55,14 +93,7 @@ Game.newGame = function () {
     Game.board.shuffleCards();
 }
 
-Game.board.bindCardActions = function () {
-    for (var i = 0; i < Game.board.cardElements.length; i++) {
-        Game.board.cardElements[i].addEventListener('click', Game.board.flipCard);
-    }
-}
-
 Game.start = function () {
-    Game.board.bindCardActions();
     Game.board.shuffleCards();
 }
 

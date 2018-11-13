@@ -20,7 +20,6 @@
 
 body {
     margin:0;
-    position:fixed;
     text-align:center;
     top:0;
     bottom:0;
@@ -35,7 +34,7 @@ body::after {
     background-position:center;
     background-size:cover;
     opacity:0.5;
-    position:absolute;
+    position:fixed;
     z-index:-1;
     top:0;
     bottom:0;
@@ -168,27 +167,61 @@ button:focus {
     border:1px solid gold;
 }
 
-.card-row {
+#game-board {
     display:flex;
-    justify-content:center;
+    width:680px;
+    margin:auto;
     flex-wrap:wrap;
+    perspective:1000px;
+    -webkit-perspective:1000px;
 }
 
 .card {
+    box-sizing:border-box;
+    position:relative;
     height:200px;
-    width:120px;
-    margin:15px;
-    border-radius:15px;
+    width:20%;
+    margin:1vh 1vw;
+    border-radius:10px;
     border:1px solid black;
-    background-color:forestgreen;
-    background-image:url(../images/triforce.png);
-    background-image:url(../images/triforce.png), linear-gradient(to bottom right, lightgreen 0%,forestgreen 30%,green 50%,lightgreen 80%,darkgreen 100%);
-    background-position:center;
-    background-size:contain;
-    background-repeat:no-repeat;
+    transform-style:preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transition:transform .5s;
+    /* overflow:hidden; */
+}
+
+.card:active {
+    transform:scale(0.97);
+    transition:transform .1s;
+}
+
+.back, .front {
+    height:calc(100% - 50px);
+    width:calc(100% - 30px);
+    padding:25px 15px;
+    border-radius:10px;
+    border:1px solid black;
+    position:absolute;
+    top:50%;
+    left:50%;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    transition:transform .5s;
+    overflow:hidden;
+}
+
+.back {
+    transform:translateX(-50%) translateY(-50%);
+    background-image:linear-gradient(to bottom right, lightgreen 0%,forestgreen 30%,green 50%,lightgreen 80%,darkgreen 100%);
+}
+
+.front {
+    transform:translateX(-50%) translateY(-50%) rotateY(180deg);
+    -webkit-transform:translateX(-50%) translateY(-50%) rotateY(180deg);
+    background-image:linear-gradient(to bottom right, violet 0%, purple 30%, indigo 50%, violet 80%, indigo 100%);
+    /* padding:100px; */
 }
 
 .card.flipped {
-    background-color:white;
-    background-image:none;
+    transform:rotateY(180deg);
 }
