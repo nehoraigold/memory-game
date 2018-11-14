@@ -1,4 +1,4 @@
-//things to implement: number of wrong guesses, timer, high scores
+//things to implement: game modals 
 
 // GAME OBJECT //
 
@@ -21,7 +21,6 @@ Game = {
     difficulty: "easy", //12 easly, 16 medium, 20 hard, 24 expert cards for difficulty levels
     wrongMatches: 0,
     timer: {
-        hour: 0,
         minute: 0,
         second: 0
     },
@@ -35,7 +34,7 @@ Game = {
 // TIMER FUNCTIONALITY //
 
 Game.timer.returnTime = function () {
-    return Game.timer.makeDoubleDigit(Game.timer.hour) + ":" + Game.timer.makeDoubleDigit(Game.timer.minute) + ":" + Game.timer.makeDoubleDigit(Game.timer.second);
+    return Game.timer.makeDoubleDigit(Game.timer.minute) + ":" + Game.timer.makeDoubleDigit(Game.timer.second);
 }
 
 Game.timer.makeDoubleDigit = function (num) {
@@ -49,19 +48,22 @@ Game.timer.update = function () {
     if (Game.timer.second > 59) {
         Game.timer.second = 0;
         Game.timer.minute++;
-        if (Game.timer.minute > 59) {
-            Game.timer.minute = 0;
-            Game.timer.hour++;
-        }
     }
+    document.getElementById('time-elapsed').textContent = Game.timer.returnTime();
 }
 
 Game.timer.startTimer = function () {
     Game.timer.lap = setInterval(() => {
         Game.timer.second++;
         Game.timer.update();
-        document.getElementById('time-elapsed').textContent = Game.timer.returnTime();
     }, 1000);
+}
+
+Game.timer.reset = function() {
+    clearInterval(Game.timer.lap);
+    Game.timer.minute = 0;
+    Game.timer.second = 0;
+    Game.timer.update();
 }
 
 // GAME BOARD FUNCTIONS //
@@ -157,20 +159,57 @@ Game.updateWrongMatches = function () {
     document.getElementById('wrong-matches-val').textContent = Game.wrongMatches;
 }
 
+Game.completed = function() {
+    setTimeout(() => {
+        Game.showModal('finished-modal');
+    },700);
+}
+
 Game.newGame = function () {
     Game.cardsFound = 0;
     Game.cardsFlipped = 0;
-    Game.board.shuffleCards();
+    Game.wrongMatches = 0;
+    Game.updateWrongMatches();
+    Game.timer.reset();
+    Game.board.generateBoard();
 }
 
+// GAME OPERATIONS AND MODALS
+
 Game.start = function () {
-    Game.board.generateBoard();
+    Game.newGame();
     document.getElementById('start-screen').style.display = "none";
+    document.querySelector('.modal-background').style.display = "none";
     document.getElementById('game').style.display = "block";
+}
+
+Game.quit = function() {
+    Game.newGame();
+    document.getElementById('game').style.display = "none";
+    document.querySelector('.modal-background').style.display = "none";
+    document.getElementById('start-screen').style.display = "block";
+
+}
+
+Game.showModal = function(modalElementID) {
+    document.querySelector('.modal-background').style.display = "block";
+    var modals = document.querySelectorAll('.modal');
+    for (var i = 0; i < modals.length; i++) {
+        modals[i].style.display = "none";
+    }
+    document.getElementById(modalElementID).style.display = "block";
 }
 
 Game.bindMenuActions = function () {
     document.getElementById('start').addEventListener('click', Game.start);
+    var newGameButtons = document.getElementsByClassName('new-game-button');
+    for (var i = 0; i < newGameButtons.length; i++) {
+        newGameButtons[i].addEventListener('click', Game.start);
+    }
+    var quitButtons = document.getElementsByClassName('quit-button');
+    for (var i = 0; i < quitButtons.length; i++) {
+        quitButtons[i].addEventListener('click', Game.quit);
+    }
 }
 
 Game.bindMenuActions();

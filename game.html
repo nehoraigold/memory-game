@@ -46,29 +46,30 @@
 		</section>
 
 		<!--MODAL BACKGROUND-->
-		<section class='modal-background' style='display:none'>
+		<section class='modal-background'>
 
 			<!--OPTIONS MODAL-->
-			<div class='modal' id='options-modal'>
+			<div class='modal' id='options-modal'  style='display:none'>
 
 			</div>
 
 			<!--COMPLETED GAME MODAL-->
 			<div class='modal' id='finished-modal'>
 				<h2>You won!</h2>
-				<button>New Game</button>
+				<button class='button new-game-button'>New Game</button>
+				<button class='button quit-button'>Quit</button>
 			</div>
 		</section>
 
 		<!-- GAME BOARD -->
 		<section id='game' style='display:none'>
 			<div id='top-menu'>
-				<button>New Game</button>
-				<button>Options</button>
-				<span>Wrong Matches</span>
+				<button class='button new-game-button' id='new-game-button'>New Game</button>
+				<button class='button options-button' id='options-button'>Options</button>
+				<span>Wrong Matches: </span>
 				<span id='wrong-matches-val'>0</span>
 				<span>Time: </span>
-				<span id='time-elapsed'>00:00:00</span>
+				<span id='time-elapsed'>00:00</span>
 			</div>
 			<div id='game-board'>
 			</div>

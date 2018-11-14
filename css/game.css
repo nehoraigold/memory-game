@@ -171,7 +171,7 @@ button:focus {
 .modal h2 {
     font-family:Triforce,fantasy;
     font-weight:100;
-    font-size:40px;
+    font-size:50px;
 }
 
 #options-modal {
@@ -184,16 +184,29 @@ button:focus {
     font-size:20px;
     height:50px;
     width:100%;
+    border-bottom:1px solid black;
 }
 
-#top-menu button {
+.button {
     font-family:Ravenna,serif;
     font-size:20px;
     border:0;
     margin:0px 10px;
     padding:10px 50px;
     border-radius:50%;
+}
+
+.quit-button {
+    background:linear-gradient(135deg, rgb(250, 250, 250) 0%, rgb(179, 179, 179)36%, rgb(99, 99, 99) 75%, rgb(202, 202, 202) 100%);
+
+}
+
+.new-game-button {
     background:linear-gradient(135deg, rgba(252,243,186,1) 0%, rgba(252,232,79,1) 36%, rgba(245,204,0,1) 75%, rgba(251,239,147,1) 100%);
+}
+
+#top-menu span {
+    margin:0px 20px;
 }
 
 #game-board {
@@ -253,4 +266,15 @@ button:focus {
 
 .card.flipped {
     transform:rotateY(180deg);
+}
+
+@media screen and (max-width:1000px) {
+    #top-menu button {
+        margin:0px 5px;
+        padding:10px 20px;
+    }
+    
+    #top-menu span {
+        margin:0px 5px;
+    }
 }
