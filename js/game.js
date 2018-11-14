@@ -1,5 +1,3 @@
-//things to implement: game modals 
-
 // GAME OBJECT //
 
 Game = {
@@ -59,8 +57,12 @@ Game.timer.startTimer = function () {
     }, 1000);
 }
 
-Game.timer.reset = function() {
+Game.timer.stop = function () {
     clearInterval(Game.timer.lap);
+}
+
+Game.timer.reset = function () {
+    Game.timer.stop();
     Game.timer.minute = 0;
     Game.timer.second = 0;
     Game.timer.update();
@@ -116,7 +118,7 @@ Game.board.generateBoard = function () {
     Game.timer.startTimer();
 }
 
-Game.board.flipCard = function (event) {
+Game.board.flipCard = function () {
     if (this === Game.board.flippedCard) {
         return null;
     }
@@ -159,10 +161,11 @@ Game.updateWrongMatches = function () {
     document.getElementById('wrong-matches-val').textContent = Game.wrongMatches;
 }
 
-Game.completed = function() {
+Game.completed = function () {
+    Game.timer.stop();
     setTimeout(() => {
         Game.showModal('finished-modal');
-    },700);
+    }, 700);
 }
 
 Game.newGame = function () {
@@ -183,20 +186,29 @@ Game.start = function () {
     document.getElementById('game').style.display = "block";
 }
 
-Game.quit = function() {
+Game.quit = function () {
     Game.newGame();
     document.getElementById('game').style.display = "none";
     document.querySelector('.modal-background').style.display = "none";
     document.getElementById('start-screen').style.display = "block";
-
 }
 
-Game.showModal = function(modalElementID) {
+Game.cancel = function () {
+    document.querySelector('.modal-background').style.display = "none";
+}
+
+Game.showModal = function (modalElementID) {
     document.querySelector('.modal-background').style.display = "block";
     var modals = document.querySelectorAll('.modal');
     for (var i = 0; i < modals.length; i++) {
         modals[i].style.display = "none";
     }
+    document.getElementById(modalElementID).style.display = "block";
+    switch (modalElementID) {
+        case "finished-modal":
+            document.querySelectorAll('#finished-modal span')[0].textContent = Game.wrongMatches;
+            document.querySelectorAll('#finished-modal span')[1].textContent = Game.timer.returnTime();
+    };
     document.getElementById(modalElementID).style.display = "block";
 }
 
@@ -209,6 +221,16 @@ Game.bindMenuActions = function () {
     var quitButtons = document.getElementsByClassName('quit-button');
     for (var i = 0; i < quitButtons.length; i++) {
         quitButtons[i].addEventListener('click', Game.quit);
+    }
+    var cancelButtons = document.getElementsByClassName('cancel-button');
+    for (var i = 0; i < cancelButtons.length; i++) {
+        cancelButtons[i].addEventListener('click', Game.cancel);
+    }
+    var optionsButtons = document.getElementsByClassName('options-button');
+    for (var i = 0; i < optionsButtons.length; i++) {
+        optionsButtons[i].addEventListener('click', () => {
+            Game.showModal('options-modal');
+        })
     }
 }
 

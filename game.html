@@ -22,7 +22,7 @@
 				<ul class='start-meu-buttons'>
 					<div>
 						<li>
-							<button id='start'>
+							<button class='new-game-button' id='start'>
 								<img class='menu-image' id='start-image' src="images/link2.png">Start
 							</button>
 						</li>
@@ -36,7 +36,7 @@
 					</div>
 					<div>
 						<li>
-							<button id='options'>
+							<button class='options-button' id='options'>
 								<img class='menu-image' id='options-image' src='images/navi.png'>Options
 							</button>
 						</li>
@@ -47,16 +47,47 @@
 
 		<!--MODAL BACKGROUND-->
 		<section class='modal-background'>
+			<!--style="display:none"-->
 
 			<!--OPTIONS MODAL-->
-			<div class='modal' id='options-modal'  style='display:none'>
-
+			<div class='modal' id='options-modal'>
+				<h2>OPTIONS</h2>
+				<div>
+					<h4>Difficulty</h4>
+					<ul>
+						<li><label>
+								<input type='radio' name='difficulty' value='easy'/>Easy
+							</label>
+						</li>
+						<li><label>
+								<input type='radio' name='difficulty' value='medium'/>Medium
+							</label>
+						</li>
+						<li><label>
+								<input type='radio' name='difficulty' value='hard' />Hard
+							</label>
+						</li>
+						<li><label>
+								<input type='radio' name='difficulty' value='expert'/>Expert
+							</label>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<h4 class='sans-serif'>Sound</h4>
+					<audio controls loop autoplay src="./music/main-theme.mp3" type="audio/mpeg" volume="0.1">Not supported</audio>
+				</div>
+				<button class='button save-button'>Save</button><button class='button cancel-button'>Cancel</button>
 			</div>
 
 			<!--COMPLETED GAME MODAL-->
-			<div class='modal' id='finished-modal'>
-				<h2>You won!</h2>
+			<div class='modal' id='finished-modal' style='display:none'>
+				<!--style="display:none"-->
+				<h2>YOU WON!</h2>
+				<p>Wrong Matches: <span></span></p>
+				<p>Your Time: <span></span></p><br />
 				<button class='button new-game-button'>New Game</button>
+				<button class='button options-button'>Options</button>
 				<button class='button quit-button'>Quit</button>
 			</div>
 		</section>
@@ -75,7 +106,6 @@
 			</div>
 		</section>
 		<iframe allow="autoplay" style='display:none' src='./music/silence.mp3'></iframe>
-		<!-- <audio loop autoplay src="./music/main-theme.mp3" type="audio/mpeg" volume="0.1">Not supported</audio> -->
 		<script src='./js/game.js'></script>
 	</body>
 
