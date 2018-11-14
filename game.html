@@ -46,30 +46,27 @@
 		</section>
 
 		<!--MODAL BACKGROUND-->
-		<section class='modal-background'>
+		<section class='modal-background' style='display:none'>
 			<!--style="display:none"-->
 
 			<!--OPTIONS MODAL-->
-			<div class='modal' id='options-modal'>
+			<div class='modal' id='options-modal' style='display:none'>
 				<h2>OPTIONS</h2>
 				<div>
 					<h4>Difficulty</h4>
 					<ul>
-						<li><label>
-								<input type='radio' name='difficulty' value='easy'/>Easy
-							</label>
+						<li>
+							<input type='radio' name='difficulty' id='easy' value='easy' checked />
+							<label for='easy'>Easy</label>
 						</li>
-						<li><label>
-								<input type='radio' name='difficulty' value='medium'/>Medium
-							</label>
+						<li><input type='radio' name='difficulty' id='medium' value='medium' />
+							<label for='medium'>Medium</label>
 						</li>
-						<li><label>
-								<input type='radio' name='difficulty' value='hard' />Hard
-							</label>
+						<li><input type='radio' name='difficulty' id='hard' value='hard' />
+							<label for='hard'>Hard</label>
 						</li>
-						<li><label>
-								<input type='radio' name='difficulty' value='expert'/>Expert
-							</label>
+						<li><input type='radio' name='difficulty' id='expert' value='expert' />
+							<label for='expert'>Expert</label>
 						</li>
 					</ul>
 				</div>

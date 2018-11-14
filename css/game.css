@@ -182,7 +182,7 @@ button:focus {
 
 .modal ul {
     list-style:none;
-    text-align:left;
+    padding-inline-start:0;
 }
 
 .modal p, .modal li {
@@ -192,8 +192,22 @@ button:focus {
     font-size:22px;
 }
 
-#options-modal {
+.modal li {
+    display:inline-block;
+}
 
+.modal input[type='radio'] {
+    display:none;
+}
+
+.modal label {
+    padding:10px 20px;
+    border-radius:50%;
+}
+
+.modal input[type='radio']:checked+label {
+    background-image:linear-gradient(to bottom right, violet 0%, purple 30%, indigo 60%, violet 80%, indigo 100%);
+    color:white;
 }
 
 #top-menu {

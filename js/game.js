@@ -3,17 +3,17 @@
 Game = {
     images: {
         botwLink: './images/botw-link.png',
-        shield: './images/shield.png',
-        link: './images/link.png',
+        zelda: './images/zelda.png',
         ganondorf: './images/ganondorf.png',
         majorasMask: './images/majoras-mask.png',
         linkSprite: './images/link-sprite.png',
-        // boat: './images/windwaker-boat.png',
-        // shadowLink: './images/shadow-link.png',
-        // zelda: './images/zelda.png',
-        // midna: './images/midna-wolf-link.png',
-        // botwZelda: './images/botw-zelda.png',
-        // navi: './images/navi.png'
+        boat: './images/windwaker-boat.png',
+        shadowLink: './images/shadow-link.png',
+        link: './images/link.png',
+        midna: './images/midna-wolf-link.png',
+        botwZelda: './images/botw-zelda.png',
+        shield: './images/shield.png',
+        navi: './images/navi.png'
     },
     cardsFound: 0,
     difficulty: "easy", //12 easly, 16 medium, 20 hard, 24 expert cards for difficulty levels
@@ -50,7 +50,7 @@ Game.timer.update = function () {
     document.getElementById('time-elapsed').textContent = Game.timer.returnTime();
 }
 
-Game.timer.startTimer = function () {
+Game.timer.start = function () {
     Game.timer.lap = setInterval(() => {
         Game.timer.second++;
         Game.timer.update();
@@ -70,12 +70,39 @@ Game.timer.reset = function () {
 
 // GAME BOARD FUNCTIONS //
 
+Game.setDifficulty = function() {
+    Game.difficulty = Array.from(document.getElementsByName('difficulty')).filter((el) => el.checked)[0].value.toLowerCase();
+}
+
 Game.board.shuffleCards = function () {
-    //converting Game.images files to array with two copies of each image
+    //the number of cards chosen depends on difficulty
     Game.board.cardOrder = [];
+    var numberOfCards;
+    switch(Game.difficulty) {
+        case "easy":
+            numberOfCards = 12;
+            break;
+        case "medium":
+            numberOfCards = 16;
+            break;
+        case "hard":
+            numberOfCards = 20;
+            break;
+        case "expert":
+            numberOfCards = 24;
+            break;
+        default:
+            Game.difficulty = "medium";
+            numberOfCards = 16;
+            break;
+    }
+    //converting Game.images files to array with two copies of each image 
     for (var property in Game.images) {
         Game.board.cardOrder.push(property);
         Game.board.cardOrder.push(property);
+        if (Game.board.cardOrder.length === numberOfCards){
+            break;
+        }
     }
     //shuffling that array
     var m = Game.board.cardOrder.length;
@@ -115,7 +142,7 @@ Game.board.generateBoard = function () {
         document.getElementById('game-board').appendChild(cardElement);
         Game.board.cardElements.push(cardElement);
     }
-    Game.timer.startTimer();
+    Game.timer.start();
 }
 
 Game.board.flipCard = function () {
@@ -197,6 +224,12 @@ Game.cancel = function () {
     document.querySelector('.modal-background').style.display = "none";
 }
 
+Game.savePreferences = function() {
+    Game.setDifficulty();
+    Game.newGame();
+    Game.cancel();
+}
+
 Game.showModal = function (modalElementID) {
     document.querySelector('.modal-background').style.display = "block";
     var modals = document.querySelectorAll('.modal');
@@ -208,6 +241,8 @@ Game.showModal = function (modalElementID) {
         case "finished-modal":
             document.querySelectorAll('#finished-modal span')[0].textContent = Game.wrongMatches;
             document.querySelectorAll('#finished-modal span')[1].textContent = Game.timer.returnTime();
+        case "options-modal":
+            Array.from(document.getElementsByName('difficulty')).filter((el) => el.value === Game.difficulty)[0].checked = true;
     };
     document.getElementById(modalElementID).style.display = "block";
 }
@@ -232,6 +267,7 @@ Game.bindMenuActions = function () {
             Game.showModal('options-modal');
         })
     }
+    document.getElementsByClassName('save-button')[0].addEventListener('click',Game.savePreferences);
 }
 
 Game.bindMenuActions();
