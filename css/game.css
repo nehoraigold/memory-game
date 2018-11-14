@@ -108,7 +108,8 @@ button:focus {
     border:0;
     opacity:0.9;
     z-index:12;
-    background:linear-gradient(135deg, rgba(252,243,186,1) 0%, rgba(252,232,79,1) 36%, rgba(245,204,0,1) 75%, rgba(251,239,147,1) 100%);
+    background:none;
+    /* background:linear-gradient(135deg, rgba(252,243,186,1) 0%, rgba(252,232,79,1) 36%, rgba(245,204,0,1) 75%, rgba(251,239,147,1) 100%); */
 }
 
 #start-screen button:hover {
@@ -178,12 +179,27 @@ button:focus {
 }
 
 #top-menu {
+    background-color:rgba(34, 139, 34, 0.6);
+    font-family:Ravenna,serif;
+    font-size:20px;
     height:50px;
-    border:1px solid gold;
+    width:100%;
+}
+
+#top-menu button {
+    font-family:Ravenna,serif;
+    font-size:20px;
+    border:0;
+    margin:0px 10px;
+    padding:10px 50px;
+    border-radius:50%;
+    background:linear-gradient(135deg, rgba(252,243,186,1) 0%, rgba(252,232,79,1) 36%, rgba(245,204,0,1) 75%, rgba(251,239,147,1) 100%);
 }
 
 #game-board {
     display:flex;
+    position:relative;
+    top:20px;
     width: 650px;
     margin:auto;
     flex-wrap:wrap;
@@ -196,7 +212,7 @@ button:focus {
     position:relative;
     height:170px;
     width:140px;
-    margin:10px;
+    margin:5px;
     border-radius:10px;
     border:1px solid black;
     transform-style:preserve-3d;
@@ -233,10 +249,8 @@ button:focus {
     transform:translateX(-50%) translateY(-50%) rotateY(180deg);
     -webkit-transform:translateX(-50%) translateY(-50%) rotateY(180deg);
     background-image:linear-gradient(to bottom right, violet 0%, purple 30%, indigo 50%, violet 80%, indigo 100%);
-    /* padding:100px; */
 }
 
 .card.flipped {
     transform:rotateY(180deg);
-    /* pointer-events: none; */
 }
