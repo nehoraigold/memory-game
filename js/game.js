@@ -338,7 +338,7 @@ function main() {
         Game.setDifficulty();
         Game.setCardback();
         Game.newGame();
-        Game.cancel();
+        document.querySelector('.modal-background').style.display = "none";
     }
 
     Game.showModal = function (modalElementID) {

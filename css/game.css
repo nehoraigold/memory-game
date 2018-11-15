@@ -89,6 +89,7 @@ button:focus {
     list-style: none;
     position:relative;
     top:150px;
+    padding-inline-start:20px;
 }
 
 #start-screen li {
@@ -367,12 +368,17 @@ button:focus {
 
 @media screen and (max-width:715px) {
     #start-screen, .title-img {
-        width:100vw;
+        width:70vw;
     }
 
-    .title-img, .title {
+    .title-img, h2.title {
         top:40px;
         position:relative;
+        font-size:5vw;
+    }
+
+    #start-screen ul {
+        top:10vh;
     }
 
     #top-menu {
@@ -399,5 +405,39 @@ button:focus {
     #top-menu .button:active {
         background-image:linear-gradient(to bottom right, violet 0%, purple 30%, indigo 50%, violet 80%, indigo 100%);
         color:white;
+    }
+
+    .modal {
+        width:80vw;
+        transform:translate(0%,0%);
+        top:1vh;
+        left:2.5vw;
+    }
+
+    .modal span, .modal p, .modal label, .modal li {
+        font-size: 3vw;
+        margin:1vw;
+        padding:1vw;
+    }
+
+    .modal h4 {
+        font-size: 4vw;
+        margin:1vw;
+    }
+
+    .modal h2 {
+        font-size:5vw;
+        margin:1vw;
+    }
+
+    .modal img {
+        width:12vw;
+        height:3vw;
+    }
+
+    button.button {
+        font-size:3vw;
+        padding:3vw;
+        margin:1vw;
     }
 }
