@@ -36,7 +36,8 @@ function main() {
             cardElements: [],
             cardOrder: [],
             flippedCard: null
-        }
+        },
+        highScores: {}
     }
 
     // TIMER FUNCTIONALITY //
@@ -84,9 +85,34 @@ function main() {
         Game.difficulty = Array.from(document.getElementsByName('difficulty')).filter((el) => el.checked)[0].value;
     }
 
-    // Game.addCardbackOptions = function() {
-
-    // }
+    Game.generateCardbackOptions = function() {
+        var cardbackOptions = document.getElementById('all-cardback-options');
+        var listItemsArray = [];
+        for (var property in Game.allCardbacks) {
+            var image = document.createElement('img');
+            image.src = Game.allCardbacks[property];
+            var label = document.createElement('label');
+            label.setAttribute('for',property);
+            label.appendChild(image);
+            var input = document.createElement('input');
+            input.setAttribute('type', 'radio');
+            input.setAttribute('name', 'cardback');
+            input.id = property;
+            input.value = property;
+            var li = document.createElement('li');
+            li.className = "cardback-option";
+            li.appendChild(input);
+            li.appendChild(label);
+            listItemsArray.push(li);
+        }
+        for (var i = 0; i < listItemsArray.length/2; i++) {
+            var newDiv = document.createElement("div");
+            newDiv.className = 'foldable';
+            newDiv.appendChild(listItemsArray.shift());
+            newDiv.appendChild(listItemsArray.shift());
+            cardbackOptions.appendChild(newDiv);
+        }
+    }
 
     Game.setCardback = function() {
         Game.cardback = Array.from(document.getElementsByName('cardback')).filter((el) => el.checked)[0].value;
@@ -292,7 +318,7 @@ function main() {
 
     Game.load = function() {
         Game.bindMenuActions();
-        // Game.addCardbackOptions();
+        Game.generateCardbackOptions();
     }
     
     Game.load();

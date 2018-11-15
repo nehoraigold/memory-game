@@ -30,8 +30,8 @@
 					</div>
 					<div>
 						<li>
-							<button id='load'>
-								<img class='menu-image' id='load-image' src='images/zelda.png'>Load
+							<button id='scores'>
+								<img class='menu-image' id='scores-image' src='images/zelda.png'>Scores
 							</button>
 						</li>
 					</div>
@@ -49,6 +49,8 @@
 		<!--MODAL BACKGROUND-->
 		<section class='modal-background' style='display:none'>
 			<!--style="display:none"-->
+
+			<!-- SCORES MODAL -->
 
 			<!--OPTIONS MODAL-->
 			<div class='modal' id='options-modal' style='display:none'>
@@ -81,32 +83,7 @@
 				</div>
 				<div>
 					<h4 class='sans-serif'>Cardback</h4>
-					<ul>
-						<div class='foldable'>
-							<li class='cardback-option'>
-								<input type='radio' name='cardback' id='triforce' value='triforce' checked />
-								<label for='triforce'>
-									<img src='./images/triforce.png'>
-								</label>
-							</li>
-							<li class='cardback-option'><input type='radio' name='cardback' id='n64' value='n64' />
-								<label for='n64'>
-									<img src='./images/n64.png'>
-								</label>
-							</li>
-						</div>
-						<div class='foldable'>
-							<li class='cardback-option'><input type='radio' name='cardback' id='ocarina' value='ocarina' />
-								<label for='ocarina'>
-									<img src='./images/ocarina.png'>
-								</label>
-							</li>
-							<li class='cardback-option'><input type='radio' name='cardback' id='sheikah' value='sheikah' />
-								<label for='sheikah'>
-									<img src='./images/eye-symbol.png'>
-								</label>
-							</li>
-						</div>
+					<ul id='all-cardback-options'>
 					</ul>
 				</div>
 				<button class='button save-button'>Save</button><button class='button cancel-button'>Cancel</button>

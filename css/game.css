@@ -130,10 +130,10 @@ button:focus {
     left:0px;
 }
 
-.menu-image#load-image {
+.menu-image#scores-image {
     height:108px;
     top:-20px;
-    right:25px;
+    right:10px;
 }
 
 .menu-image#options-image {
