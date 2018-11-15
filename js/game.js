@@ -1,6 +1,6 @@
 function main() {
 
-// GAME OBJECT //
+    // GAME OBJECT //
 
     Game = {
         images: {
@@ -37,7 +37,57 @@ function main() {
             cardOrder: [],
             flippedCard: null
         },
-        highScores: {}
+        highScores: {
+            easy: {
+                name: "",
+                time: []
+            },
+            medium: {
+                name: "",
+                time: []
+            },
+            hard: {
+                name: "",
+                time: []
+            },
+            expert: {
+                name: "",
+                time: []
+            }
+        }
+    }
+
+    // HIGH SCORES
+
+    Game.loadHighScores = function () {
+        if (typeof window.localStorage.ZeldaMemoryGameHighScores !== "undefined") {
+            Game.highScores = JSON.parse(window.localStorage.ZeldaMemoryGameHighScores);
+        }
+    }
+
+    Game.checkIfHighScore = function () {
+        var highScoreLevel = Game.highScores[Game.difficulty];
+        if ((Game.timer.minute < highScoreLevel.time[0] && Game.timer.second < highScoreLevel.time[1]) || highScoreLevel.time.length === 0) {
+            document.getElementById('high-score-notification').style.display = "block";
+            return true;
+        } else {
+            document.getElementById('high-score-notification').style.display = "none";
+            return false;
+        }
+    }
+
+    Game.recordHighScore = function () {
+        var highScoreLevel = Game.highScores[Game.difficulty];
+        highScoreLevel.name = document.querySelector('#high-score-notification input').value;
+        highScoreLevel.time[0] = Game.timer.minute;
+        highScoreLevel.time[1] = Game.timer.second;
+        document.getElementById('high-score-notification').style.display = "none";
+        document.querySelector('#high-score-notification input').value = "";
+        Game.saveHighScores();
+    }
+
+    Game.saveHighScores = function () {
+        window.localStorage.ZeldaMemoryGameHighScores = JSON.stringify(Game.highScores);
     }
 
     // TIMER FUNCTIONALITY //
@@ -85,14 +135,14 @@ function main() {
         Game.difficulty = Array.from(document.getElementsByName('difficulty')).filter((el) => el.checked)[0].value;
     }
 
-    Game.generateCardbackOptions = function() {
+    Game.generateCardbackOptions = function () {
         var cardbackOptions = document.getElementById('all-cardback-options');
         var listItemsArray = [];
         for (var property in Game.allCardbacks) {
             var image = document.createElement('img');
             image.src = Game.allCardbacks[property];
             var label = document.createElement('label');
-            label.setAttribute('for',property);
+            label.setAttribute('for', property);
             label.appendChild(image);
             var input = document.createElement('input');
             input.setAttribute('type', 'radio');
@@ -105,7 +155,7 @@ function main() {
             li.appendChild(label);
             listItemsArray.push(li);
         }
-        for (var i = 0; i < listItemsArray.length/2; i++) {
+        for (var i = 0; i < listItemsArray.length / 2; i++) {
             var newDiv = document.createElement("div");
             newDiv.className = 'foldable';
             newDiv.appendChild(listItemsArray.shift());
@@ -114,7 +164,7 @@ function main() {
         }
     }
 
-    Game.setCardback = function() {
+    Game.setCardback = function () {
         Game.cardback = Array.from(document.getElementsByName('cardback')).filter((el) => el.checked)[0].value;
     }
 
@@ -201,7 +251,6 @@ function main() {
                 Game.cardsFound += 2;
                 Game.board.flippedCard = null;
                 if (Game.cardsFound === Game.board.cardOrder.length) {
-                    console.log('Congrats! You won!');
                     Game.completed();
                 }
             } else {
@@ -234,6 +283,7 @@ function main() {
 
     Game.completed = function () {
         Game.timer.stop();
+        Game.checkIfHighScore();
         setTimeout(() => {
             Game.showModal('finished-modal');
         }, 1000);
@@ -271,6 +321,7 @@ function main() {
     Game.savePreferences = function () {
         Game.setDifficulty();
         Game.setCardback();
+        Game.newGame();
         Game.cancel();
     }
 
@@ -313,15 +364,18 @@ function main() {
                 Game.showModal('options-modal');
             })
         }
+        var highScoreButton = document.getElementsByClassName('high-score-button')[0];
+        highScoreButton.addEventListener('click',Game.recordHighScore);
         document.getElementsByClassName('save-button')[0].addEventListener('click', Game.savePreferences);
     }
 
-    Game.load = function() {
+    Game.load = function () {
         Game.bindMenuActions();
         Game.generateCardbackOptions();
+        Game.loadHighScores();
     }
-    
+
     Game.load();
 }
 
-window.addEventListener('DOMContentLoaded',main);
+window.addEventListener('DOMContentLoaded', main);

@@ -223,6 +223,24 @@ button:focus {
     top:16px;
 }
 
+#high-score-notification {
+    display:none;
+}
+
+#high-score-name {
+    border-radius: 5px;
+    border: 0;
+    font-size: 24px;
+    margin: 10px;
+    font-family: Ravenna;
+    padding:5px;
+}
+
+.modal .high-score-button {
+    background-image:linear-gradient(to bottom right, violet 0%, purple 30%, indigo 60%, violet 80%, indigo 100%);
+    color:white;
+}
+
 #top-menu {
     background-color:rgba(34, 139, 34, 0.6);
     font-family:Ravenna,serif;
