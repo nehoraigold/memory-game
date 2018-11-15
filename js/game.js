@@ -1,273 +1,278 @@
+function main() {
+
 // GAME OBJECT //
 
-Game = {
-    images: {
-        botwLink: './images/botw-link.png',
-        zelda: './images/zelda.png',
-        ganondorf: './images/ganondorf.png',
-        majorasMask: './images/majoras-mask.png',
-        linkSprite: './images/link-sprite.png',
-        boat: './images/windwaker-boat.png',
-        shadowLink: './images/shadow-link.png',
-        link: './images/link.png',
-        midna: './images/midna-wolf-link.png',
-        botwZelda: './images/botw-zelda.png',
-        shield: './images/shield.png',
-        navi: './images/navi.png'
-    },
-    cardsFound: 0,
-    difficulty: "easy", //12 easly, 16 medium, 20 hard, 24 expert cards for difficulty levels
-    wrongMatches: 0,
-    timer: {
-        minute: 0,
-        second: 0
-    },
-    board: {
-        cardElements: [],
-        cardOrder: [],
-        flippedCard: null
+    Game = {
+        images: {
+            botwLink: './images/botw-link.png',
+            zelda: './images/zelda.png',
+            ganondorf: './images/ganondorf.png',
+            majorasMask: './images/majoras-mask.png',
+            linkSprite: './images/link-sprite.png',
+            boat: './images/windwaker-boat.png',
+            shadowLink: './images/shadow-link.png',
+            link: './images/link.png',
+            midna: './images/midna-wolf-link.png',
+            botwZelda: './images/botw-zelda.png',
+            shield: './images/shield.png',
+            navi: './images/navi.png'
+        },
+        cardsFound: 0,
+        difficulty: "easy",
+        wrongMatches: 0,
+        timer: {
+            minute: 0,
+            second: 0
+        },
+        board: {
+            cardElements: [],
+            cardOrder: [],
+            flippedCard: null
+        }
     }
-}
 
-// TIMER FUNCTIONALITY //
+    // TIMER FUNCTIONALITY //
 
-Game.timer.returnTime = function () {
-    return Game.timer.makeDoubleDigit(Game.timer.minute) + ":" + Game.timer.makeDoubleDigit(Game.timer.second);
-}
-
-Game.timer.makeDoubleDigit = function (num) {
-    if (num < 10) {
-        num = "0" + num;
+    Game.timer.returnTime = function () {
+        return Game.timer.makeDoubleDigit(Game.timer.minute) + ":" + Game.timer.makeDoubleDigit(Game.timer.second);
     }
-    return num;
-}
 
-Game.timer.update = function () {
-    if (Game.timer.second > 59) {
+    Game.timer.makeDoubleDigit = function (num) {
+        if (num < 10) {
+            num = "0" + num;
+        }
+        return num;
+    }
+
+    Game.timer.update = function () {
+        if (Game.timer.second > 59) {
+            Game.timer.second = 0;
+            Game.timer.minute++;
+        }
+        document.getElementById('time-elapsed').textContent = Game.timer.returnTime();
+    }
+
+    Game.timer.start = function () {
+        Game.timer.lap = setInterval(() => {
+            Game.timer.second++;
+            Game.timer.update();
+        }, 1000);
+    }
+
+    Game.timer.stop = function () {
+        clearInterval(Game.timer.lap);
+    }
+
+    Game.timer.reset = function () {
+        Game.timer.stop();
+        Game.timer.minute = 0;
         Game.timer.second = 0;
-        Game.timer.minute++;
-    }
-    document.getElementById('time-elapsed').textContent = Game.timer.returnTime();
-}
-
-Game.timer.start = function () {
-    Game.timer.lap = setInterval(() => {
-        Game.timer.second++;
         Game.timer.update();
-    }, 1000);
-}
-
-Game.timer.stop = function () {
-    clearInterval(Game.timer.lap);
-}
-
-Game.timer.reset = function () {
-    Game.timer.stop();
-    Game.timer.minute = 0;
-    Game.timer.second = 0;
-    Game.timer.update();
-}
-
-// GAME BOARD FUNCTIONS //
-
-Game.setDifficulty = function() {
-    Game.difficulty = Array.from(document.getElementsByName('difficulty')).filter((el) => el.checked)[0].value.toLowerCase();
-}
-
-Game.board.shuffleCards = function () {
-    //the number of cards chosen depends on difficulty
-    Game.board.cardOrder = [];
-    var numberOfCards;
-    switch(Game.difficulty) {
-        case "easy":
-            numberOfCards = 12;
-            break;
-        case "medium":
-            numberOfCards = 16;
-            break;
-        case "hard":
-            numberOfCards = 20;
-            break;
-        case "expert":
-            numberOfCards = 24;
-            break;
-        default:
-            Game.difficulty = "medium";
-            numberOfCards = 16;
-            break;
     }
-    //converting Game.images files to array with two copies of each image 
-    for (var property in Game.images) {
-        Game.board.cardOrder.push(property);
-        Game.board.cardOrder.push(property);
-        if (Game.board.cardOrder.length === numberOfCards){
-            break;
+
+    // GAME BOARD FUNCTIONS //
+
+    Game.setDifficulty = function () {
+        Game.difficulty = Array.from(document.getElementsByName('difficulty')).filter((el) => el.checked)[0].value.toLowerCase();
+    }
+
+    Game.board.shuffleCards = function () {
+        //the number of cards chosen depends on difficulty
+        Game.board.cardOrder = [];
+        var numberOfCards;
+        switch (Game.difficulty) {
+            case "easy":
+                numberOfCards = 12;
+                break;
+            case "medium":
+                numberOfCards = 16;
+                break;
+            case "hard":
+                numberOfCards = 20;
+                break;
+            case "expert":
+                numberOfCards = 24;
+                break;
+            default:
+                Game.difficulty = "medium";
+                numberOfCards = 16;
+                break;
+        }
+        //converting Game.images files to array with two copies of each image 
+        for (var property in Game.images) {
+            Game.board.cardOrder.push(property);
+            Game.board.cardOrder.push(property);
+            if (Game.board.cardOrder.length === numberOfCards) {
+                break;
+            }
+        }
+        //shuffling that array
+        var m = Game.board.cardOrder.length;
+        var t, i;
+        while (m !== 0) {
+            i = Math.floor(Math.random() * m--);
+            t = Game.board.cardOrder[m];
+            Game.board.cardOrder[m] = Game.board.cardOrder[i];
+            Game.board.cardOrder[i] = t;
         }
     }
-    //shuffling that array
-    var m = Game.board.cardOrder.length;
-    var t, i;
-    while (m !== 0) {
-        i = Math.floor(Math.random() * m--);
-        t = Game.board.cardOrder[m];
-        Game.board.cardOrder[m] = Game.board.cardOrder[i];
-        Game.board.cardOrder[i] = t;
-    }
-}
 
-Game.board.generateBoard = function () {
-    Game.board.shuffleCards();
-    var gameBoard = document.getElementById('game-board');
-    if (Game.board.cardOrder.length <= 16) {
-        gameBoard.style.width = "650px";
-    } else if (Game.board.cardOrder.length < 24) {
-        gameBoard.style.width = "750px";
-    } else {
-        gameBoard.style.width = "900px";
-    }
-    document.getElementById('game-board').innerHTML = "";
-    for (var i = 0; i < Game.board.cardOrder.length; i++) {
-        var cardElement = document.createElement('div');
-        cardElement.className = "card";
-        cardElement.dataset.type = Game.board.cardOrder[i];
-        var backImage = document.createElement('img');
-        backImage.className = "back";
-        backImage.src = "./images/triforce.png";
-        var frontImage = document.createElement('img');
-        frontImage.className = "front";
-        frontImage.src = Game.images[Game.board.cardOrder[i]];
-        cardElement.addEventListener('click', Game.board.flipCard);
-        cardElement.appendChild(frontImage);
-        cardElement.appendChild(backImage);
-        document.getElementById('game-board').appendChild(cardElement);
-        Game.board.cardElements.push(cardElement);
-    }
-    Game.timer.start();
-}
-
-Game.board.flipCard = function () {
-    if (this === Game.board.flippedCard) {
-        return null;
-    }
-    this.classList.toggle("flipped");
-    var type = this.dataset.type;
-    if (Game.board.flippedCard !== null) {
-        if (type === Game.board.flippedCard.dataset.type) {
-            this.removeEventListener('click', Game.board.flipCard);
-            Game.cardsFound += 2;
-            Game.board.flippedCard = null;
-            if (Game.cardsFound === Game.board.cardOrder.length) {
-                console.log('Congrats! You won!');
-                Game.completed();
-            }
+    Game.board.generateBoard = function () {
+        Game.board.shuffleCards();
+        var gameBoard = document.getElementById('game-board');
+        if (Game.board.cardOrder.length <= 16) {
+            gameBoard.style.width = "650px";
+        } else if (Game.board.cardOrder.length < 24) {
+            gameBoard.style.width = "750px";
         } else {
-            for (var i = 0; i < Game.board.cardElements.length; i++) {
-                Game.board.cardElements[i].style.pointerEvents = "none";
-            }
-            setTimeout(() => {
-                this.classList.toggle('flipped');
-                Game.board.flippedCard.classList.toggle('flipped');
-                Game.board.flippedCard = null;
-            }, 800);
-            setTimeout(() => {
-                for (var i = 0; i < Game.board.cardElements.length; i++) {
-                    Game.board.cardElements[i].style.pointerEvents = "auto";
-                }
-            }, 800);
-            Game.wrongMatches++;
-            Game.updateWrongMatches();
-            Game.board.flippedCard.addEventListener('click', Game.board.flipCard);
+            gameBoard.style.width = "900px";
         }
-    } else if (Game.board.flippedCard === null) {
-        Game.board.flippedCard = this;
-        this.removeEventListener('click', Game.board.flipCard);
+        document.getElementById('game-board').innerHTML = "";
+        for (var i = 0; i < Game.board.cardOrder.length; i++) {
+            var cardElement = document.createElement('div');
+            cardElement.className = "card";
+            cardElement.dataset.type = Game.board.cardOrder[i];
+            var backImage = document.createElement('img');
+            backImage.className = "back";
+            backImage.src = "./images/triforce.png";
+            var frontImage = document.createElement('img');
+            frontImage.className = "front";
+            frontImage.src = Game.images[Game.board.cardOrder[i]];
+            cardElement.addEventListener('click', Game.board.flipCard);
+            cardElement.appendChild(frontImage);
+            cardElement.appendChild(backImage);
+            document.getElementById('game-board').appendChild(cardElement);
+            Game.board.cardElements.push(cardElement);
+        }
+        Game.timer.start();
     }
-}
 
-Game.updateWrongMatches = function () {
-    document.getElementById('wrong-matches-val').textContent = Game.wrongMatches;
-}
-
-Game.completed = function () {
-    Game.timer.stop();
-    setTimeout(() => {
-        Game.showModal('finished-modal');
-    }, 700);
-}
-
-Game.newGame = function () {
-    Game.cardsFound = 0;
-    Game.cardsFlipped = 0;
-    Game.wrongMatches = 0;
-    Game.updateWrongMatches();
-    Game.timer.reset();
-    Game.board.generateBoard();
-}
-
-// GAME OPERATIONS AND MODALS
-
-Game.start = function () {
-    Game.newGame();
-    document.getElementById('start-screen').style.display = "none";
-    document.querySelector('.modal-background').style.display = "none";
-    document.getElementById('game').style.display = "block";
-}
-
-Game.quit = function () {
-    Game.newGame();
-    document.getElementById('game').style.display = "none";
-    document.querySelector('.modal-background').style.display = "none";
-    document.getElementById('start-screen').style.display = "block";
-}
-
-Game.cancel = function () {
-    document.querySelector('.modal-background').style.display = "none";
-}
-
-Game.savePreferences = function() {
-    Game.setDifficulty();
-    Game.newGame();
-    Game.cancel();
-}
-
-Game.showModal = function (modalElementID) {
-    document.querySelector('.modal-background').style.display = "block";
-    var modals = document.querySelectorAll('.modal');
-    for (var i = 0; i < modals.length; i++) {
-        modals[i].style.display = "none";
+    Game.board.flipCard = function () {
+        if (this === Game.board.flippedCard) {
+            return null;
+        }
+        this.classList.toggle("flipped");
+        var type = this.dataset.type;
+        if (Game.board.flippedCard !== null) {
+            if (type === Game.board.flippedCard.dataset.type) {
+                this.removeEventListener('click', Game.board.flipCard);
+                Game.cardsFound += 2;
+                Game.board.flippedCard = null;
+                if (Game.cardsFound === Game.board.cardOrder.length) {
+                    console.log('Congrats! You won!');
+                    Game.completed();
+                }
+            } else {
+                for (var i = 0; i < Game.board.cardElements.length; i++) {
+                    Game.board.cardElements[i].style.pointerEvents = "none";
+                }
+                setTimeout(() => {
+                    this.classList.toggle('flipped');
+                    Game.board.flippedCard.classList.toggle('flipped');
+                    Game.board.flippedCard = null;
+                }, 800);
+                setTimeout(() => {
+                    for (var i = 0; i < Game.board.cardElements.length; i++) {
+                        Game.board.cardElements[i].style.pointerEvents = "auto";
+                    }
+                }, 800);
+                Game.wrongMatches++;
+                Game.updateWrongMatches();
+                Game.board.flippedCard.addEventListener('click', Game.board.flipCard);
+            }
+        } else if (Game.board.flippedCard === null) {
+            Game.board.flippedCard = this;
+            this.removeEventListener('click', Game.board.flipCard);
+        }
     }
-    document.getElementById(modalElementID).style.display = "block";
-    switch (modalElementID) {
-        case "finished-modal":
-            document.querySelectorAll('#finished-modal span')[0].textContent = Game.wrongMatches;
-            document.querySelectorAll('#finished-modal span')[1].textContent = Game.timer.returnTime();
-        case "options-modal":
-            Array.from(document.getElementsByName('difficulty')).filter((el) => el.value === Game.difficulty)[0].checked = true;
-    };
-    document.getElementById(modalElementID).style.display = "block";
+
+    Game.updateWrongMatches = function () {
+        document.getElementById('wrong-matches-val').textContent = Game.wrongMatches;
+    }
+
+    Game.completed = function () {
+        Game.timer.stop();
+        setTimeout(() => {
+            Game.showModal('finished-modal');
+        }, 1000);
+    }
+
+    Game.newGame = function () {
+        Game.cardsFound = 0;
+        Game.cardsFlipped = 0;
+        Game.wrongMatches = 0;
+        Game.updateWrongMatches();
+        Game.timer.reset();
+        Game.board.generateBoard();
+    }
+
+    // GAME OPERATIONS AND MODALS
+
+    Game.start = function () {
+        Game.newGame();
+        document.getElementById('start-screen').style.display = "none";
+        document.querySelector('.modal-background').style.display = "none";
+        document.getElementById('game').style.display = "block";
+    }
+
+    Game.quit = function () {
+        Game.newGame();
+        document.getElementById('game').style.display = "none";
+        document.querySelector('.modal-background').style.display = "none";
+        document.getElementById('start-screen').style.display = "block";
+    }
+
+    Game.cancel = function () {
+        document.querySelector('.modal-background').style.display = "none";
+    }
+
+    Game.savePreferences = function () {
+        Game.setDifficulty();
+        Game.newGame();
+        Game.cancel();
+    }
+
+    Game.showModal = function (modalElementID) {
+        document.querySelector('.modal-background').style.display = "block";
+        var modals = document.querySelectorAll('.modal');
+        for (var i = 0; i < modals.length; i++) {
+            modals[i].style.display = "none";
+        }
+        document.getElementById(modalElementID).style.display = "block";
+        switch (modalElementID) {
+            case "finished-modal":
+                document.querySelectorAll('#finished-modal span')[0].textContent = Game.wrongMatches;
+                document.querySelectorAll('#finished-modal span')[1].textContent = Game.timer.returnTime();
+            case "options-modal":
+                Array.from(document.getElementsByName('difficulty')).filter((el) => el.value === Game.difficulty)[0].checked = true;
+        };
+        document.getElementById(modalElementID).style.display = "block";
+    }
+
+    Game.bindMenuActions = function () {
+        document.getElementById('start').addEventListener('click', Game.start);
+        var newGameButtons = document.getElementsByClassName('new-game-button');
+        for (var i = 0; i < newGameButtons.length; i++) {
+            newGameButtons[i].addEventListener('click', Game.start);
+        }
+        var quitButtons = document.getElementsByClassName('quit-button');
+        for (var i = 0; i < quitButtons.length; i++) {
+            quitButtons[i].addEventListener('click', Game.quit);
+        }
+        var cancelButtons = document.getElementsByClassName('cancel-button');
+        for (var i = 0; i < cancelButtons.length; i++) {
+            cancelButtons[i].addEventListener('click', Game.cancel);
+        }
+        var optionsButtons = document.getElementsByClassName('options-button');
+        for (var i = 0; i < optionsButtons.length; i++) {
+            optionsButtons[i].addEventListener('click', () => {
+                Game.showModal('options-modal');
+            })
+        }
+        document.getElementsByClassName('save-button')[0].addEventListener('click', Game.savePreferences);
+    }
+
+    Game.bindMenuActions();
 }
 
-Game.bindMenuActions = function () {
-    document.getElementById('start').addEventListener('click', Game.start);
-    var newGameButtons = document.getElementsByClassName('new-game-button');
-    for (var i = 0; i < newGameButtons.length; i++) {
-        newGameButtons[i].addEventListener('click', Game.start);
-    }
-    var quitButtons = document.getElementsByClassName('quit-button');
-    for (var i = 0; i < quitButtons.length; i++) {
-        quitButtons[i].addEventListener('click', Game.quit);
-    }
-    var cancelButtons = document.getElementsByClassName('cancel-button');
-    for (var i = 0; i < cancelButtons.length; i++) {
-        cancelButtons[i].addEventListener('click', Game.cancel);
-    }
-    var optionsButtons = document.getElementsByClassName('options-button');
-    for (var i = 0; i < optionsButtons.length; i++) {
-        optionsButtons[i].addEventListener('click', () => {
-            Game.showModal('options-modal');
-        })
-    }
-    document.getElementsByClassName('save-button')[0].addEventListener('click',Game.savePreferences);
-}
-
-Game.bindMenuActions();
+window.addEventListener('DOMContentLoaded',main);

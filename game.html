@@ -7,6 +7,7 @@
 
 		<title>Legend of Zelda: The Memory Game</title>
 		<link rel='stylesheet' type='text/css' href='./css/game.css'>
+		<script src='./js/game.js'></script>
 	</head>
 
 	<body>
@@ -55,19 +56,23 @@
 				<div>
 					<h4>Difficulty</h4>
 					<ul>
-						<li>
-							<input type='radio' name='difficulty' id='easy' value='easy' checked />
-							<label for='easy'>Easy</label>
-						</li>
-						<li><input type='radio' name='difficulty' id='medium' value='medium' />
-							<label for='medium'>Medium</label>
-						</li>
-						<li><input type='radio' name='difficulty' id='hard' value='hard' />
-							<label for='hard'>Hard</label>
-						</li>
-						<li><input type='radio' name='difficulty' id='expert' value='expert' />
-							<label for='expert'>Expert</label>
-						</li>
+						<div class='foldable'>
+							<li>
+								<input type='radio' name='difficulty' id='easy' value='easy' checked />
+								<label for='easy'>Easy</label>
+							</li>
+							<li><input type='radio' name='difficulty' id='medium' value='medium' />
+								<label for='medium'>Medium</label>
+							</li>
+						</div>
+						<div class='foldable'>
+							<li><input type='radio' name='difficulty' id='hard' value='hard' />
+								<label for='hard'>Hard</label>
+							</li>
+							<li><input type='radio' name='difficulty' id='expert' value='expert' />
+								<label for='expert'>Expert</label>
+							</li>
+						</div>
 					</ul>
 				</div>
 				<div>
@@ -83,7 +88,7 @@
 				<h2>YOU WON!</h2>
 				<p>Wrong Matches: <span></span></p>
 				<p>Your Time: <span></span></p><br />
-				<button class='button new-game-button'>New Game</button>
+				<button class='button new-game-button'>Play Again</button>
 				<button class='button options-button'>Options</button>
 				<button class='button quit-button'>Quit</button>
 			</div>
@@ -92,18 +97,21 @@
 		<!-- GAME BOARD -->
 		<section id='game' style='display:none'>
 			<div id='top-menu'>
-				<button class='button new-game-button' id='new-game-button'>New Game</button>
-				<button class='button options-button' id='options-button'>Options</button>
-				<span>Wrong Matches: </span>
-				<span id='wrong-matches-val'>0</span>
-				<span>Time: </span>
-				<span id='time-elapsed'>00:00</span>
+				<div class='foldable'>
+					<button class='button new-game-button' id='new-game-button'>New Game</button>
+					<button class='button options-button' id='options-button'>Options</button>
+				</div>
+				<div class='foldable'>
+					<span>Wrong Matches: </span>
+					<span id='wrong-matches-val'>0</span>
+					<span>Time: </span>
+					<span id='time-elapsed'>00:00</span>
+				</div>
 			</div>
 			<div id='game-board'>
 			</div>
 		</section>
 		<iframe allow="autoplay" style='display:none' src='./music/silence.mp3'></iframe>
-		<script src='./js/game.js'></script>
 	</body>
 
 </html>

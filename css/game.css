@@ -194,6 +194,7 @@ button:focus {
 
 .modal li {
     display:inline-block;
+    margin:10px 5px;
 }
 
 .modal input[type='radio'] {
@@ -217,6 +218,10 @@ button:focus {
     height:50px;
     width:100%;
     border-bottom:1px solid black;
+}
+
+.foldable {
+    display:inline-block;
 }
 
 .button {
@@ -326,6 +331,43 @@ button:focus {
     }
     
     #top-menu span {
-        margin:0px 5px;
+        margin:0px 0px;
+    }
+}
+
+@media screen and (max-width:715px) {
+    #start-screen, .title-img {
+        width:100vw;
+    }
+
+    .title-img, .title {
+        top:40px;
+        position:relative;
+    }
+
+    #top-menu {
+        height:80px;
+    }
+
+    .foldable {
+        display:block;
+        line-height:2;
+    }
+
+    #game-board {
+        display:block;
+        width:100vw!important;
+        height:calc(50vh - 80px);
+    }
+
+    .card {
+        display:inline-block;
+        width:20vw;
+        height:30vw;
+    }
+
+    #top-menu .button:active {
+        background-image:linear-gradient(to bottom right, violet 0%, purple 30%, indigo 50%, violet 80%, indigo 100%);
+        color:white;
     }
 }
