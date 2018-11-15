@@ -22,7 +22,6 @@ function main() {
             n64: './images/n64.png',
             deku: './images/deku-shield.png',
             ocarina: './images/ocarina.png',
-            sheikah: './images/eye-symbol.png'
         },
         cardback: 'triforce',
         cardsFound: 0,
@@ -147,10 +146,12 @@ function main() {
     // GAME BOARD FUNCTIONS //
 
     Game.setDifficulty = function () {
+        //Radio buttons for selection in the options modal
         Game.difficulty = Array.from(document.getElementsByName('difficulty')).filter((el) => el.checked)[0].value;
     }
 
     Game.generateCardbackOptions = function () {
+        //Generates all the options for card design images
         var cardbackOptions = document.getElementById('all-cardback-options');
         var listItemsArray = [];
         for (var property in Game.allCardbacks) {
@@ -170,7 +171,7 @@ function main() {
             li.appendChild(label);
             listItemsArray.push(li);
         }
-        for (var i = 0; i < listItemsArray.length / 2; i++) {
+        for (var i = 0; i <= listItemsArray.length / 2; i++) {
             var newDiv = document.createElement("div");
             newDiv.className = 'foldable';
             newDiv.appendChild(listItemsArray.shift());
@@ -180,6 +181,7 @@ function main() {
     }
 
     Game.setCardback = function () {
+        //Radio buttons for selection in the options modal
         Game.cardback = Array.from(document.getElementsByName('cardback')).filter((el) => el.checked)[0].value;
     }
 
@@ -323,7 +325,6 @@ function main() {
     }
 
     Game.quit = function () {
-        Game.newGame();
         document.getElementById('game').style.display = "none";
         document.querySelector('.modal-background').style.display = "none";
         document.getElementById('start-screen').style.display = "block";
