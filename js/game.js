@@ -67,7 +67,7 @@ function main() {
 
     Game.checkIfHighScore = function () {
         var highScoreLevel = Game.highScores[Game.difficulty];
-        if ((Game.timer.minute < highScoreLevel.time[0] && Game.timer.second < highScoreLevel.time[1]) || highScoreLevel.time.length === 0) {
+        if ((Game.timer.minute <= highScoreLevel.time[0] && Game.timer.second < highScoreLevel.time[1]) || highScoreLevel.time.length === 0) {
             document.getElementById('high-score-notification').style.display = "block";
             return true;
         } else {
@@ -88,6 +88,21 @@ function main() {
 
     Game.saveHighScores = function () {
         window.localStorage.ZeldaMemoryGameHighScores = JSON.stringify(Game.highScores);
+    }
+
+    Game.displayHighScores = function () {
+        var spans = Array.from(document.querySelectorAll('#high-scores-modal span'));
+        for (var i = 0; i < spans.length; i++) {
+            var spanDiff = spans[i].id.split("-")[0];
+            var spanField = spans[i].id.split("-")[1];
+            if (spanField === "name") {
+                spans[i].textContent = Game.highScores[spanDiff].name;
+            } else {
+                if (Game.highScores[spanDiff].time.length !== 0) {
+                    spans[i].textContent = Game.timer.makeDoubleDigit(Game.highScores[spanDiff].time[0]) + ":" + Game.timer.makeDoubleDigit(Game.highScores[spanDiff].time[1]);
+                }
+            }
+        }
     }
 
     // TIMER FUNCTIONALITY //
@@ -336,9 +351,13 @@ function main() {
             case "finished-modal":
                 document.querySelectorAll('#finished-modal span')[0].textContent = Game.wrongMatches;
                 document.querySelectorAll('#finished-modal span')[1].textContent = Game.timer.returnTime();
+                break;
             case "options-modal":
                 Array.from(document.getElementsByName('difficulty')).filter((el) => el.value === Game.difficulty)[0].checked = true;
                 Array.from(document.getElementsByName('cardback')).filter((el) => el.value === Game.cardback)[0].checked = true;
+                break;
+            case "high-scores-modal":
+                Game.displayHighScores();
 
         };
         document.getElementById(modalElementID).style.display = "block";
@@ -365,8 +384,11 @@ function main() {
             })
         }
         var highScoreButton = document.getElementsByClassName('high-score-button')[0];
-        highScoreButton.addEventListener('click',Game.recordHighScore);
+        highScoreButton.addEventListener('click', Game.recordHighScore);
         document.getElementsByClassName('save-button')[0].addEventListener('click', Game.savePreferences);
+        document.getElementById('scores').addEventListener('click', () => {
+            Game.showModal('high-scores-modal');
+        });
     }
 
     Game.load = function () {

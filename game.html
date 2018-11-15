@@ -47,11 +47,23 @@
 		</section>
 
 		<!--MODAL BACKGROUND-->
-		<section class='modal-background' style='display:none'>
+		<section class='modal-background'>
 			<!--style="display:none"-->
 
 			<!-- SCORES MODAL -->
-
+			<div class='modal' id='high-scores-modal'>
+				<h2>HIGH SCORES</h2>
+				<h4>Easy</h4>
+				<p><span id='easy-name'></span> - <span id='easy-time'></span></p>
+				<h4>Medium</h4>
+				<p><span id='medium-name'></span> - <span id='medium-time'></span></p>
+				<h4>Hard</h4>
+				<p><span id='hard-name'></span> - <span id='hard-time'></span></p>
+				<h4>Expert</h4>
+				<p><span id='expert-name'></span> - <span id='expert-time'></span></p>
+				<br />
+				<button class='button quit-button'>Cool!</button>
+			</div>
 			<!--OPTIONS MODAL-->
 			<div class='modal' id='options-modal' style='display:none'>
 				<h2>OPTIONS</h2>
@@ -96,7 +108,7 @@
 				<p>Wrong Matches: <span></span></p>
 				<p>Your Time: <span></span></p>
 				<div id='high-score-notification'>
-					<p>You got a high score! Enter your username below.</p>
+					<p>You got a high score! Enter your name below.</p>
 					<input type='text' id='high-score-name'/>
 					<button class='button high-score-button'>Save</button>
 				</div>
