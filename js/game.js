@@ -19,10 +19,10 @@ function main() {
         },
         allCardbacks: {
             triforce: './images/triforce.png',
-            sheikah: './images/eye-symbol.png',
             n64: './images/n64.png',
             deku: './images/deku-shield.png',
-            ocarina: './images/ocarina.png'
+            ocarina: './images/ocarina.png',
+            sheikah: './images/eye-symbol.png'
         },
         cardback: 'triforce',
         cardsFound: 0,
@@ -57,7 +57,7 @@ function main() {
         }
     }
 
-    // HIGH SCORES
+    // HIGH SCORE FUNCTIONALITY
 
     Game.loadHighScores = function () {
         if (typeof window.localStorage.ZeldaMemoryGameHighScores !== "undefined") {
@@ -331,6 +331,7 @@ function main() {
 
     Game.cancel = function () {
         document.querySelector('.modal-background').style.display = "none";
+        Game.timer.start();
     }
 
     Game.savePreferences = function () {
@@ -342,6 +343,7 @@ function main() {
 
     Game.showModal = function (modalElementID) {
         document.querySelector('.modal-background').style.display = "block";
+        Game.timer.stop();
         var modals = document.querySelectorAll('.modal');
         for (var i = 0; i < modals.length; i++) {
             modals[i].style.display = "none";
