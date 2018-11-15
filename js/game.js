@@ -17,6 +17,14 @@ function main() {
             shield: './images/shield.png',
             navi: './images/navi.png'
         },
+        allCardbacks: {
+            triforce: './images/triforce.png',
+            sheikah: './images/eye-symbol.png',
+            n64: './images/n64.png',
+            deku: './images/deku-shield.png',
+            ocarina: './images/ocarina.png'
+        },
+        cardback: 'triforce',
         cardsFound: 0,
         difficulty: "easy",
         wrongMatches: 0,
@@ -73,7 +81,15 @@ function main() {
     // GAME BOARD FUNCTIONS //
 
     Game.setDifficulty = function () {
-        Game.difficulty = Array.from(document.getElementsByName('difficulty')).filter((el) => el.checked)[0].value.toLowerCase();
+        Game.difficulty = Array.from(document.getElementsByName('difficulty')).filter((el) => el.checked)[0].value;
+    }
+
+    // Game.addCardbackOptions = function() {
+
+    // }
+
+    Game.setCardback = function() {
+        Game.cardback = Array.from(document.getElementsByName('cardback')).filter((el) => el.checked)[0].value;
     }
 
     Game.board.shuffleCards = function () {
@@ -134,7 +150,7 @@ function main() {
             cardElement.dataset.type = Game.board.cardOrder[i];
             var backImage = document.createElement('img');
             backImage.className = "back";
-            backImage.src = "./images/triforce.png";
+            backImage.src = Game.allCardbacks[Game.cardback];
             var frontImage = document.createElement('img');
             frontImage.className = "front";
             frontImage.src = Game.images[Game.board.cardOrder[i]];
@@ -228,7 +244,7 @@ function main() {
 
     Game.savePreferences = function () {
         Game.setDifficulty();
-        Game.newGame();
+        Game.setCardback();
         Game.cancel();
     }
 
@@ -245,6 +261,8 @@ function main() {
                 document.querySelectorAll('#finished-modal span')[1].textContent = Game.timer.returnTime();
             case "options-modal":
                 Array.from(document.getElementsByName('difficulty')).filter((el) => el.value === Game.difficulty)[0].checked = true;
+                Array.from(document.getElementsByName('cardback')).filter((el) => el.value === Game.cardback)[0].checked = true;
+
         };
         document.getElementById(modalElementID).style.display = "block";
     }
@@ -272,7 +290,12 @@ function main() {
         document.getElementsByClassName('save-button')[0].addEventListener('click', Game.savePreferences);
     }
 
-    Game.bindMenuActions();
+    Game.load = function() {
+        Game.bindMenuActions();
+        // Game.addCardbackOptions();
+    }
+    
+    Game.load();
 }
 
 window.addEventListener('DOMContentLoaded',main);

@@ -211,6 +211,18 @@ button:focus {
     color:white;
 }
 
+.modal li.cardback-option label {
+    position:relative;
+    top:-20px;
+    padding:30px 20px;
+}
+
+.modal label img {
+    height:50px;
+    position:relative;
+    top:16px;
+}
+
 #top-menu {
     background-color:rgba(34, 139, 34, 0.6);
     font-family:Ravenna,serif;
@@ -363,7 +375,7 @@ button:focus {
     .card {
         display:inline-block;
         width:20vw;
-        height:30vw;
+        height:27vw;
     }
 
     #top-menu .button:active {
